@@ -1,6 +1,9 @@
+* {
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
-  /* padding: 18px; */
 }
 
 .App-header {

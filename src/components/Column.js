@@ -1,9 +1,12 @@
 import React from 'react';
+import _ from 'lodash';
 import styled from 'styled-components';
+import Ticket from './Ticket';
+import Button from './Button';
+import Title from './Title';
 
 const Wrapper = styled.div`
-  // background: lightyellow;
-  width: 100%;
+  width: ${props => props.width || '100%'};
   height: 100%;
   border-left: 1px solid silver;
   &:first-child {
@@ -12,36 +15,27 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled.div`
-  // background: yellow;
-  height: 12%;
+  width: 100%;
+  height: 58px;
   display: flex;
   align-items: center;
 `;
 
-const Title = styled.div`
-  // background: lightblue;
-  text-align: left;
-  width: 100%;
+const Tickets = styled.div`
+  height: calc(100% - 58px);
   padding: 16px;
 `;
 
-const Button = styled.button`
-  // background: lightblue;
-  width: 32px;
-  height: 32px;
-  float: right;
-  margin: 16px;
-  border-radius: 5px;
-`;
-
-function Column({ header }) {
+function Column({ header, width, tickets }) {
   return (
-    <Wrapper>
+    <Wrapper width={width}>
       <Header>
-        <Title>{header}</Title>
-        {/* <Action><button style={{ width: 32, height: 32 }}>+</button></Action> */}
+        <Title bold>{header}</Title>
         <Button>+</Button>
       </Header>
+      <Tickets>
+        {_.map(tickets, ticket => <Ticket value={ticket} />)}
+      </Tickets>
     </Wrapper>
   );
 }
