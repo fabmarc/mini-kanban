@@ -30,7 +30,7 @@ const Tickets = styled.div`
 
 const inputRef = React.createRef();
 
-function Column({ header, status, width, tickets = {} }) {
+function Column({ header, status, width, tickets = {}, onChange }) {
   const [innerTickets, setTnnerTickets] = useState({ ...tickets });
   const [description, setDescription] = useState('');
   const [newTicket, setNewTicket] = useState(false);
@@ -39,9 +39,13 @@ function Column({ header, status, width, tickets = {} }) {
     if (newTicket && inputRef.current) inputRef.current.focus();
   }, [newTicket]);
 
+  useEffect(() => {
+    if (onChange) onChange(status, innerTickets);
+  }, [status, onChange, innerTickets]);
+
   const ticketIds = Object.keys(innerTickets);
 
-  const saveTicket = () => {
+  const createTicket = () => {
     if (description) {
       setTnnerTickets(prevInnerTickets => {
         const id = (_.chain(Object.keys(prevInnerTickets))
@@ -94,7 +98,7 @@ function Column({ header, status, width, tickets = {} }) {
           <TextBox
             ref={inputRef}
             placeholder="New item..."
-            onBlur={saveTicket}
+            onBlur={createTicket}
             value={description}
             onChange={handleValueChange}
           />

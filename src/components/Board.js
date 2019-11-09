@@ -29,30 +29,7 @@ const Columns = styled.div`
   padding: 16px;
 `;
 
-const columns = {
-  todo: 'To-Do',
-  ongoing: 'In progress',
-  done: 'Done',
-};
-
-const tickets = {
-  done: {
-    1: {
-      id: 1,
-      status: 'done',
-      description: 'Phone screening with Cobalt',
-    },
-  },
-  todo: {
-    1: {
-      id: 1,
-      status: 'todo',
-      description: 'Finish Cobalt frontend challenge',
-    },
-  },
-};
-
-function Board() {
+function Board({ columns, tickets, onChange }) {
   const statuses = Object.keys(columns);
   return (
     <Wrapper>
@@ -61,6 +38,7 @@ function Board() {
         {_.map(statuses, status => (
           <Column
             key={status}
+            onChange={onChange}
             tickets={tickets[status]}
             width={`${100 / statuses.length}%`}
             header={columns[status]}
