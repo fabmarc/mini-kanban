@@ -41,14 +41,52 @@ function Column({ header, status, width, tickets = {} }) {
 
   const ticketIds = Object.keys(innerTickets);
 
+  const saveTicket = () => {
+    if (description) {
+      setTnnerTickets(prevInnerTickets => {
+        const id = (_.chain(Object.keys(prevInnerTickets))
+          .map((id) => +id).max().value() || 0) + 1;
+        return {
+          ...prevInnerTickets,
+          [id]: { id, description, status },
+        };
+      });
+    }
+    setDescription('');
+    setNewTicket(false);
+  }
+
+  const handleValueChange = (event) => {
+    setDescription(event.target.value);
+  }
+  
+  const handleTicketChange = (ticket, newDescription) => {
+    setTnnerTickets(prevInnerTickets => {
+      prevInnerTickets[ticket.id] = {
+        ...prevInnerTickets[ticket.id],
+        description: newDescription,
+      };
+      return { ...prevInnerTickets };
+    });
+  }
+
+  const handleTicketDelete = (ticket) => {
+    setTnnerTickets(prevInnerTickets => {
+      delete prevInnerTickets[ticket.id];
+      return { ...prevInnerTickets };
+    });
+  }
+
+  const handleAddClick = () => {
+    setDescription('');
+    setNewTicket(true);
+  }
+
   return (
     <Wrapper width={width}>
       <Header>
         <Title bold>{header}</Title>
-        <Button onClick={() => {
-          setDescription('');
-          setNewTicket(true);
-        }}>+</Button>
+        <Button onClick={handleAddClick}>+</Button>
       </Header>
       <Tickets>
         {
@@ -56,24 +94,9 @@ function Column({ header, status, width, tickets = {} }) {
           <TextBox
             ref={inputRef}
             placeholder="New item..."
-            onBlur={() => {
-              if (description) {
-                setTnnerTickets(prevInnerTickets => {
-                  const id = (_.chain(Object.keys(prevInnerTickets))
-                    .map((id) => +id).max().value() || 0) + 1;
-                  return {
-                    ...prevInnerTickets,
-                    [id]: { id, description, status },
-                  };
-                });
-              }
-              setDescription('');
-              setNewTicket(false);
-            }}
+            onBlur={saveTicket}
             value={description}
-            onChange={event => {
-              setDescription(event.target.value);
-            }}
+            onChange={handleValueChange}
           />
         }
         {_.map(ticketIds, ticketId => {
@@ -81,21 +104,8 @@ function Column({ header, status, width, tickets = {} }) {
             <Ticket
               key={ticketId}
               value={innerTickets[ticketId]}
-              onChange={(ticket, newDescription) => {
-                setTnnerTickets(prevInnerTickets => {
-                  prevInnerTickets[ticket.id] = {
-                    ...prevInnerTickets[ticket.id],
-                    description: newDescription,
-                  };
-                  return { ...prevInnerTickets };
-                });
-              }}
-              onDelete={(ticket) => {
-                setTnnerTickets(prevInnerTickets => {
-                  delete prevInnerTickets[ticket.id];
-                  return { ...prevInnerTickets };
-                });
-              }}
+              onChange={handleTicketChange}
+              onDelete={handleTicketDelete}
             />
           );
         })}

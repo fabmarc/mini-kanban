@@ -26,33 +26,41 @@ function Ticket({ value = {}, onChange, onDelete }) {
     if (editTicket && inputRef.current) inputRef.current.focus();
   }, [editTicket]);
 
+  const saveTicket = () => {
+    if (!description) setDescription(origDescription);
+    else if (description !== origDescription) {
+      if (onChange) onChange(value, description);
+      setDescription(description);
+    }
+    setEditTicket(false);
+  }
+
+  const handleValueChange = (event) => {
+    setDescription(event.target.value);
+  }
+
+  const handleDeleteClick = () => {
+    if (onDelete) onDelete(value);
+  }
+
+  const handleDoubleClick = () => {
+    setEditTicket(true);
+  }
+
   if (editTicket) {
     return (
       <TextBox
         ref={inputRef}
-        onBlur={() => {
-          if (!description) setDescription(origDescription);
-          else if (description !== origDescription) {
-            if (onChange) onChange(value, description);
-            setDescription(description);
-          }
-          setEditTicket(false);
-        }}
+        onBlur={saveTicket}
         value={description}
-        onChange={event => {
-          setDescription(event.target.value);
-        }}
+        onChange={handleValueChange}
       />
     );
   }
   return (
-    <Wrapper onDoubleClick={() => {
-      setEditTicket(true);
-    }}>
+    <Wrapper onDoubleClick={handleDoubleClick}>
       <Title>{origDescription || '(no description)'}</Title>
-      <Button onClick={() => {
-        if (onDelete) onDelete(value);
-      }}>-</Button>
+      <Button onClick={handleDeleteClick}>-</Button>
     </Wrapper>
   );
 }
