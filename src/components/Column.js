@@ -59,8 +59,12 @@ function Column({ header, status, width, tickets = {} }) {
             onBlur={() => {
               if (description) {
                 setTnnerTickets(prevInnerTickets => {
-                  const id = Object.keys(prevInnerTickets).length + 1;
-                  return { ...prevInnerTickets, [id]: { id, description, status } };
+                  const id = (_.chain(Object.keys(prevInnerTickets))
+                    .map((id) => +id).max().value() || 0) + 1;
+                  return {
+                    ...prevInnerTickets,
+                    [id]: { id, description, status },
+                  };
                 });
               }
               setDescription('');

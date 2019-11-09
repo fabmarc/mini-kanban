@@ -17,9 +17,10 @@ const Wrapper = styled.div`
 
 const inputRef = React.createRef();
 
-function Ticket({ value, onChange, onDelete }) {
-  const [description, setDescription] = useState((value && value.description) || '');
+function Ticket({ value = {}, onChange, onDelete }) {
+  const origDescription = value.description || '';
   const [editTicket, setEditTicket] = useState(false);
+  const [description, setDescription] = useState(origDescription);
 
   useEffect(() => {
     if (editTicket && inputRef.current) inputRef.current.focus();
@@ -30,8 +31,8 @@ function Ticket({ value, onChange, onDelete }) {
       <TextBox
         ref={inputRef}
         onBlur={() => {
-          if (!description) setDescription(value.description);
-          else if (description !== value.description) {
+          if (!description) setDescription(origDescription);
+          else if (description !== origDescription) {
             if (onChange) onChange(value, description);
             setDescription(description);
           }
@@ -48,7 +49,7 @@ function Ticket({ value, onChange, onDelete }) {
     <Wrapper onDoubleClick={() => {
       setEditTicket(true);
     }}>
-      <Title>{value.description}</Title>
+      <Title>{origDescription || '(no description)'}</Title>
       <Button onClick={() => {
         if (onDelete) onDelete(value);
       }}>-</Button>
