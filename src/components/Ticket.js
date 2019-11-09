@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+
+import TextBox from './TextBox';
 import Button from './Button';
 import Title from './Title';
 
@@ -13,29 +15,44 @@ const Wrapper = styled.div`
   margin-bottom: 8px;
 `;
 
-const TextBox = styled.input`
-  height: 58px;
-  display: flex;
-  width: 100%;
-  align-items: center;
-  border-radius: 5px;
-  border: 1px solid silver;
-  margin-bottom: 8px;
-  font-size: inherit;
-  padding: 16px;
-`;
+const inputRef = React.createRef();
 
-function Ticket({ value }) {
-  return (
-    value.edit ?
+function Ticket({ value, onChange, onDelete }) {
+  const [description, setDescription] = useState((value && value.description) || '');
+  const [editTicket, setEditTicket] = useState(false);
+
+  useEffect(() => {
+    if (editTicket && inputRef.current) inputRef.current.focus();
+  }, [editTicket]);
+
+  if (editTicket) {
+    return (
       <TextBox
-        placeholder="New item..."
-        value={value.description}
-      /> :
-      <Wrapper>
-        <Title>{value.description}</Title>
-        <Button>-</Button>
-      </Wrapper>
+        ref={inputRef}
+        onBlur={() => {
+          if (!description) setDescription(value.description);
+          else if (description !== value.description) {
+            if (onChange) onChange(value, description);
+            setDescription(description);
+          }
+          setEditTicket(false);
+        }}
+        value={description}
+        onChange={event => {
+          setDescription(event.target.value);
+        }}
+      />
+    );
+  }
+  return (
+    <Wrapper onDoubleClick={() => {
+      setEditTicket(true);
+    }}>
+      <Title>{value.description}</Title>
+      <Button onClick={() => {
+        if (onDelete) onDelete(value);
+      }}>-</Button>
+    </Wrapper>
   );
 }
 

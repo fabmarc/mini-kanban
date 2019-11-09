@@ -1,6 +1,8 @@
-import React from 'react';
-import _ from 'lodash';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import _ from 'lodash';
+
+import TextBox from './TextBox';
 import Ticket from './Ticket';
 import Button from './Button';
 import Title from './Title';
@@ -26,15 +28,73 @@ const Tickets = styled.div`
   padding: 16px;
 `;
 
-function Column({ header, width, tickets }) {
+const inputRef = React.createRef();
+
+function Column({ header, status, width, tickets = {} }) {
+  const [innerTickets, setTnnerTickets] = useState({ ...tickets });
+  const [description, setDescription] = useState('');
+  const [newTicket, setNewTicket] = useState(false);
+
+  useEffect(() => {
+    if (newTicket && inputRef.current) inputRef.current.focus();
+  }, [newTicket]);
+
+  const ticketIds = Object.keys(innerTickets);
+
   return (
     <Wrapper width={width}>
       <Header>
         <Title bold>{header}</Title>
-        <Button>+</Button>
+        <Button onClick={() => {
+          setDescription('');
+          setNewTicket(true);
+        }}>+</Button>
       </Header>
       <Tickets>
-        {_.map(tickets, ticket => <Ticket value={ticket} />)}
+        {
+          newTicket &&
+          <TextBox
+            ref={inputRef}
+            placeholder="New item..."
+            onBlur={() => {
+              if (description) {
+                setTnnerTickets(prevInnerTickets => {
+                  const id = Object.keys(prevInnerTickets).length + 1;
+                  return { ...prevInnerTickets, [id]: { id, description, status } };
+                });
+              }
+              setDescription('');
+              setNewTicket(false);
+            }}
+            value={description}
+            onChange={event => {
+              setDescription(event.target.value);
+            }}
+          />
+        }
+        {_.map(ticketIds, ticketId => {
+          return (
+            <Ticket
+              key={ticketId}
+              value={innerTickets[ticketId]}
+              onChange={(ticket, newDescription) => {
+                setTnnerTickets(prevInnerTickets => {
+                  prevInnerTickets[ticket.id] = {
+                    ...prevInnerTickets[ticket.id],
+                    description: newDescription,
+                  };
+                  return { ...prevInnerTickets };
+                });
+              }}
+              onDelete={(ticket) => {
+                setTnnerTickets(prevInnerTickets => {
+                  delete prevInnerTickets[ticket.id];
+                  return { ...prevInnerTickets };
+                });
+              }}
+            />
+          );
+        })}
       </Tickets>
     </Wrapper>
   );

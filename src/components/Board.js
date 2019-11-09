@@ -1,6 +1,7 @@
 import React from 'react';
-import _ from 'lodash';
 import styled from 'styled-components';
+import _ from 'lodash';
+
 import Column from './Column';
 
 const Wrapper = styled.div`
@@ -35,23 +36,20 @@ const columns = {
 };
 
 const tickets = {
-  done: [{
-    id: 1,
-    description: 'Phone screening with Cobalt',
-    status: 'done',
-    edit: false,
-  }],
-  todo: [{
-    id: 2,
-    description: 'Finish Cobalt frontend challenge',
-    status: 'todo',
-    edit: false,
-  }, {
-    id: 3,
-    description: '',
-    status: 'todo',
-    edit: true,
-  }],
+  done: {
+    1: {
+      id: 1,
+      status: 'done',
+      description: 'Phone screening with Cobalt',
+    },
+  },
+  todo: {
+    1: {
+      id: 1,
+      status: 'todo',
+      description: 'Finish Cobalt frontend challenge',
+    },
+  },
 };
 
 function Board() {
