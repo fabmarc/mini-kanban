@@ -10,7 +10,7 @@ import './App.css';
 const keySession = 'tickets';
 const allTickets = fetchStateFromSession(keySession) || {};
 
-const handleTicketsChange = (status, tickets) => {
+const handleTicketsChange = (status, tickets) => { 
   allTickets[status] = tickets;
   saveStateInSession(keySession, allTickets);
 }

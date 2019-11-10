@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { useDrop } from 'react-dnd';
 import _ from 'lodash';
 
 import TextBox from './TextBox';
@@ -10,10 +11,14 @@ import Title from './Title';
 const Wrapper = styled.div`
   width: ${props => props.width || '100%'};
   height: 100%;
-  border-left: 1px solid silver;
+  border-left: 1px solid #c0c0c0;
   &:first-child {
     border-left: 0;
   }
+  ${props => props.highlight &&
+    css`
+      box-shadow: 0 0 8px 8px #fffec8;
+    `}
 `;
 
 const Header = styled.div`
@@ -30,8 +35,8 @@ const Tickets = styled.div`
 
 const inputRef = React.createRef();
 
-function Column({ header, status, width, tickets = {}, onChange }) {
-  const [innerTickets, setTnnerTickets] = useState({ ...tickets });
+function Column({ header, status, width, tickets = {}, onChange, onDrop }) {
+  const [innerTickets, setInnerTickets] = useState(tickets);
   const [description, setDescription] = useState('');
   const [newTicket, setNewTicket] = useState(false);
 
@@ -39,17 +44,32 @@ function Column({ header, status, width, tickets = {}, onChange }) {
     if (newTicket && inputRef.current) inputRef.current.focus();
   }, [newTicket]);
 
+  useEffect(() => { setInnerTickets(tickets) }, [tickets]);
+
   useEffect(() => {
     if (onChange) onChange(status, innerTickets);
   }, [status, onChange, innerTickets]);
+
+  const [{ isOver, canDrop }, drop] = useDrop({
+    accept: 'ticket',
+    drop({ ticket }) {
+      onDrop(status, ticket);
+    },
+    canDrop({ ticket }) {
+      return (status !== ticket.status);
+    },
+    collect: monitor => ({
+      isOver: !!monitor.isOver(),
+      canDrop: !!monitor.canDrop(),
+    }),
+  });
 
   const ticketIds = Object.keys(innerTickets);
 
   const createTicket = () => {
     if (description) {
-      setTnnerTickets(prevInnerTickets => {
-        const id = (_.chain(Object.keys(prevInnerTickets))
-          .map((id) => +id).max().value() || 0) + 1;
+      setInnerTickets((prevInnerTickets) => {
+        const id = new Date().getUTCMilliseconds();
         return {
           ...prevInnerTickets,
           [id]: { id, description, status },
@@ -63,9 +83,9 @@ function Column({ header, status, width, tickets = {}, onChange }) {
   const handleValueChange = (event) => {
     setDescription(event.target.value);
   }
-  
+
   const handleTicketChange = (ticket, newDescription) => {
-    setTnnerTickets(prevInnerTickets => {
+    setInnerTickets((prevInnerTickets) => {
       prevInnerTickets[ticket.id] = {
         ...prevInnerTickets[ticket.id],
         description: newDescription,
@@ -75,7 +95,7 @@ function Column({ header, status, width, tickets = {}, onChange }) {
   }
 
   const handleTicketDelete = (ticket) => {
-    setTnnerTickets(prevInnerTickets => {
+    setInnerTickets((prevInnerTickets) => {
       delete prevInnerTickets[ticket.id];
       return { ...prevInnerTickets };
     });
@@ -87,7 +107,11 @@ function Column({ header, status, width, tickets = {}, onChange }) {
   }
 
   return (
-    <Wrapper width={width}>
+    <Wrapper
+      ref={drop}
+      width={width}
+      highlight={isOver && canDrop}
+    >
       <Header>
         <Title bold>{header}</Title>
         <Button onClick={handleAddClick}>+</Button>

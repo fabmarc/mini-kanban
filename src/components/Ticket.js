@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useDrag } from 'react-dnd';
 
 import TextBox from './TextBox';
 import Button from './Button';
@@ -11,8 +12,10 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   border-radius: 5px;
-  border: 1px solid silver;
+  border: 1px solid #c0c0c0;
   margin-bottom: 8px;
+  opacity: ${props => props.opacity || 1};
+  background-color: #fffef0;
 `;
 
 const inputRef = React.createRef();
@@ -25,6 +28,13 @@ function Ticket({ value = {}, onChange, onDelete }) {
   useEffect(() => {
     if (editTicket && inputRef.current) inputRef.current.focus();
   }, [editTicket]);
+
+  const [{ isDragging }, drag] = useDrag({
+    item: { type: 'ticket', ticket: value },
+    collect: monitor => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  });
 
   const saveTicket = () => {
     if (!description) setDescription(origDescription);
@@ -58,7 +68,11 @@ function Ticket({ value = {}, onChange, onDelete }) {
     );
   }
   return (
-    <Wrapper onDoubleClick={handleDoubleClick}>
+    <Wrapper
+      ref={drag}
+      opacity={isDragging ? 0.2 : 1}
+      onDoubleClick={handleDoubleClick}
+    >
       <Title>{origDescription || '(no description)'}</Title>
       <Button onClick={handleDeleteClick}>-</Button>
     </Wrapper>

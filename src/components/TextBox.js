@@ -7,7 +7,7 @@ const TextBox = styled.input`
   width: 100%;
   align-items: center;
   border-radius: 5px;
-  border: 1px solid silver;
+  border: 1px solid #c0c0c0;
   margin-bottom: 8px;
   font-size: inherit;
   padding: 16px;

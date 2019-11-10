@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { DndProvider } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import styled from 'styled-components';
 import _ from 'lodash';
 
@@ -17,7 +19,7 @@ const Header = styled.div`
   font-size: calc(10px + 2vmin);
   font-weight: bold;
   justify-content: center;
-  border-bottom: 1px solid silver;
+  border-bottom: 1px solid #c0c0c0;
 `;
 
 const Columns = styled.div`
@@ -30,23 +32,48 @@ const Columns = styled.div`
 `;
 
 function Board({ columns, tickets, onChange }) {
+  const [allTickets, setAllTickets] = useState(tickets);
   const statuses = Object.keys(columns);
+  console.log('Board');
   return (
-    <Wrapper>
-      <Header>Mini-Kanban Board</Header>
-      <Columns>
-        {_.map(statuses, status => (
-          <Column
-            key={status}
-            onChange={onChange}
-            tickets={tickets[status]}
-            width={`${100 / statuses.length}%`}
-            header={columns[status]}
-            status={status}
-          />
-        ))}
-      </Columns>
-    </Wrapper>
+    <DndProvider backend={HTML5Backend}>
+      <Wrapper>
+        <Header>Mini-Kanban Board</Header>
+        <Columns>
+          {_.map(statuses, status => (
+            <Column
+              key={status}
+              width={`${100 / statuses.length}%`}
+              tickets={allTickets[status]}
+              header={columns[status]}
+              status={status}
+              onChange={(status, tickets) => {
+                if (onChange) onChange(status, tickets);
+                setAllTickets((prevAllTickets) => {
+                  prevAllTickets[status] = tickets;
+                  return prevAllTickets;
+                });
+              }}
+              onDrop={(newStatus, ticket) => {
+                setAllTickets((prevAllTickets) => {
+                  delete prevAllTickets[ticket.status][ticket.id];
+                  return {
+                    ...prevAllTickets,
+                    [newStatus]: {
+                      ...prevAllTickets[newStatus],
+                      [ticket.id]: { ...ticket, status: newStatus }
+                    },
+                    [ticket.status]: {
+                      ...prevAllTickets[ticket.status],
+                    },
+                  };
+                });
+              }}
+            />
+          ))}
+        </Columns>
+      </Wrapper>
+    </DndProvider>
   );
 }
 
