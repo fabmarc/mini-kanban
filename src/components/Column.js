@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   }
   ${props => props.highlight &&
     css`
-      box-shadow: 0 0 8px 8px #fffec8;
+      box-shadow: 0 0 8px 8px #d4e6f1;
     `}
 `;
 
@@ -114,7 +114,10 @@ function Column({ header, status, width, tickets = {}, onChange, onDrop }) {
     >
       <Header>
         <Title bold>{header}</Title>
-        <Button onClick={handleAddClick}>+</Button>
+        <Button
+          background="#fffef0"
+          onClick={handleAddClick}
+        >+</Button>
       </Header>
       <Tickets>
         {

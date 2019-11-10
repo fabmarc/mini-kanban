@@ -1,3 +1,9 @@
 .App {
   text-align: center;
 }
+
+@keyframes ticket {
+  from {
+    background-color: #eaf2f8;
+  }
+}

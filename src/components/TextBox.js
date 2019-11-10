@@ -11,6 +11,7 @@ const TextBox = styled.input`
   margin-bottom: 8px;
   font-size: inherit;
   padding: 16px;
+  background-color: #eaf2f8;
 `;
 
 export default TextBox;

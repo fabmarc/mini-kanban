@@ -5,6 +5,7 @@ const Button = styled.button`
   height: 32px;
   border-radius: 5px;
   margin: 16px;
+  background-color: ${props => props.background || '#ffffff'};
 `;
 
 export default Button;

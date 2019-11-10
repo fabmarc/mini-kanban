@@ -15,6 +15,8 @@ const Wrapper = styled.div`
   border: 1px solid #c0c0c0;
   margin-bottom: 8px;
   opacity: ${props => props.opacity || 1};
+  animation-name: ticket;
+  animation-duration: 2s;
   background-color: #fffef0;
 `;
 
