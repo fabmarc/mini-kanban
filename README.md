@@ -1,6 +1,6 @@
-## Mini-Kanban Board
+# Mini-Kanban Board
 
-# Installation
+## Installation
 To run the app you need to install npm, NodeJS and Yarn.
 
 Install dependencies: ```yarn install```
