@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import HTML5Backend from 'react-dnd-html5-backend';
+import renderer from 'react-test-renderer';
 import { DndProvider } from 'react-dnd';
 import Ticket from '../Ticket';
 
@@ -22,7 +23,7 @@ describe('<Ticket>', () => {
     expect(wrapper.find('div').at(1).contains('(no description)')).toBe(true);
   });
 
-  it('renders in edit mode on double click', () => {
+  it('renders in edit mode', () => {
     const wrapper = mount(
       <DndProvider backend={HTML5Backend}>
         <Ticket />
@@ -54,5 +55,16 @@ describe('<Ticket>', () => {
     );
     wrapper.find('button').simulate('click');
     expect(onDelete.mock.calls.length).toEqual(1);
+  });
+
+  it('renders correctly', () => {
+    const tree = renderer
+      .create(
+        <DndProvider backend={HTML5Backend}>
+          <Ticket />
+        </DndProvider>
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
   });
 });

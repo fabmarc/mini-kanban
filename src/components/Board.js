@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import Column from './Column';
@@ -58,7 +59,7 @@ function Board({ columns, tickets, onChange }) {
     });
   };
 
-  const statuses = Object.keys(columns);
+  const statuses = Object.keys(columns || {});
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -81,5 +82,17 @@ function Board({ columns, tickets, onChange }) {
     </DndProvider>
   );
 }
+
+Board.propTypes = {
+  columns: PropTypes.object,
+  tickets: PropTypes.objectOf(
+    PropTypes.objectOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        description: PropTypes.string.isRequired,
+        status: PropTypes.string.isRequired,
+      }))),
+  onChange: PropTypes.func,
+};
 
 export default Board;

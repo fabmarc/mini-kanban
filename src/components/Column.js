@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { useDrop } from 'react-dnd';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import TextBox from './TextBox';
@@ -35,7 +36,7 @@ const Tickets = styled.div`
 
 const inputRef = React.createRef();
 
-function Column({ header, status, width, tickets = {}, onChange, onDrop }) {
+function Column({ header, status, width, tickets, onChange, onDrop }) {
   const [innerTickets, setInnerTickets] = useState(tickets);
   const [description, setDescription] = useState('');
   const [newTicket, setNewTicket] = useState(false);
@@ -63,8 +64,6 @@ function Column({ header, status, width, tickets = {}, onChange, onDrop }) {
       canDrop: !!monitor.canDrop(),
     }),
   });
-
-  const ticketIds = Object.keys(innerTickets);
 
   const createTicket = () => {
     if (description) {
@@ -106,6 +105,8 @@ function Column({ header, status, width, tickets = {}, onChange, onDrop }) {
     setNewTicket(true);
   }
 
+  const ticketIds = Object.keys(innerTickets || {});
+
   return (
     <Wrapper
       ref={drop}
@@ -144,5 +145,19 @@ function Column({ header, status, width, tickets = {}, onChange, onDrop }) {
     </Wrapper>
   );
 }
+
+Column.propTypes = {
+  header: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+  tickets: PropTypes.objectOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      description: PropTypes.string.isRequired,
+      status: PropTypes.string.isRequired,
+    })),
+  width: PropTypes.string,
+  onChange: PropTypes.func,
+  onDrop: PropTypes.func,
+};
 
 export default Column;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useDrag } from 'react-dnd';
+import PropTypes from 'prop-types';
 
 import TextBox from './TextBox';
 import Button from './Button';
@@ -79,6 +80,14 @@ function Ticket({ value = {}, onChange, onDelete }) {
       <Button onClick={handleDeleteClick}>-</Button>
     </Wrapper>
   );
+}
+
+Ticket.propTypes = {
+  value: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+  }),
 }
 
 export default Ticket;

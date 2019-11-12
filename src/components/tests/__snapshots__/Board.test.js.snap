@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Board> renders correctly 1`] = `
+<div
+  className="sc-gzVnrw jpFIFM"
+>
+  <div
+    className="sc-htoDjs kIneFD"
+  >
+    Mini-Kanban Board
+  </div>
+  <div
+    className="sc-dnqmqq gBTbCw"
+  />
+</div>
+`;
+
+exports[`renders correctly 1`] = `
+<div
+  className="sc-bxivhb gGKUWd"
+  onDoubleClick={[Function]}
+  opacity={1}
+>
+  <div
+    className="sc-htpNat cmbrzm"
+  >
+    (no description)
+  </div>
+  <button
+    className="sc-bwzfXH eUNjes"
+    onClick={[Function]}
+  >
+    -
+  </button>
+</div>
+`;

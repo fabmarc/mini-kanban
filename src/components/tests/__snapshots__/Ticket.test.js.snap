@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Ticket> renders correctly 1`] = `
+<div
+  className="sc-bxivhb gGKUWd"
+  onDoubleClick={[Function]}
+  opacity={1}
+>
+  <div
+    className="sc-htpNat cmbrzm"
+  >
+    (no description)
+  </div>
+  <button
+    className="sc-bwzfXH eUNjes"
+    onClick={[Function]}
+  >
+    -
+  </button>
+</div>
+`;
+
+exports[`renders correctly 1`] = `
+<div
+  className="sc-bxivhb gGKUWd"
+  onDoubleClick={[Function]}
+  opacity={1}
+>
+  <div
+    className="sc-htpNat cmbrzm"
+  >
+    (no description)
+  </div>
+  <button
+    className="sc-bwzfXH eUNjes"
+    onClick={[Function]}
+  >
+    -
+  </button>
+</div>
+`;

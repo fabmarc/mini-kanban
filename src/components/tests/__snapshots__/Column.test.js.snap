@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Column> renders correctly with no tickets 1`] = `
+<div
+  className="sc-ifAKCX itMQZt"
+>
+  <div
+    className="sc-EHOje kYqLhJ"
+  >
+    <div
+      className="sc-htpNat cXCOUR"
+    >
+      To-Do
+    </div>
+    <button
+      className="sc-bwzfXH kODISU"
+      onClick={[Function]}
+    >
+      +
+    </button>
+  </div>
+  <div
+    className="sc-bZQynM lfIEnT"
+  />
+</div>
+`;
+
+exports[`<Column> renders correctly with tickets 1`] = `
+<div
+  className="sc-ifAKCX itMQZt"
+>
+  <div
+    className="sc-EHOje kYqLhJ"
+  >
+    <div
+      className="sc-htpNat cXCOUR"
+    >
+      To-Do
+    </div>
+    <button
+      className="sc-bwzfXH kODISU"
+      onClick={[Function]}
+    >
+      +
+    </button>
+  </div>
+  <div
+    className="sc-bZQynM lfIEnT"
+  >
+    <div
+      className="sc-bxivhb gGKUWd"
+      onDoubleClick={[Function]}
+      opacity={1}
+    >
+      <div
+        className="sc-htpNat cmbrzm"
+      >
+        Test 1
+      </div>
+      <button
+        className="sc-bwzfXH eUNjes"
+        onClick={[Function]}
+      >
+        -
+      </button>
+    </div>
+    <div
+      className="sc-bxivhb gGKUWd"
+      onDoubleClick={[Function]}
+      opacity={1}
+    >
+      <div
+        className="sc-htpNat cmbrzm"
+      >
+        Test 2
+      </div>
+      <button
+        className="sc-bwzfXH eUNjes"
+        onClick={[Function]}
+      >
+        -
+      </button>
+    </div>
+  </div>
+</div>
+`;
