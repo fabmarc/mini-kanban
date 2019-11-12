@@ -33,7 +33,7 @@ const Columns = styled.div`
 `;
 
 function Board({ columns, tickets, onChange }) {
-  const [allTickets, setAllTickets] = useState(tickets);
+  const [allTickets, setAllTickets] = useState(tickets || {});
 
   const handleTicketChange = (status, tickets) => {
     if (onChange) onChange(status, tickets);

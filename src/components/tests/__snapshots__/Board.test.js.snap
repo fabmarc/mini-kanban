@@ -1,6 +1,91 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Board> renders correctly 1`] = `
+exports[`<Board> renders correctly with columns 1`] = `
+<div
+  className="sc-gzVnrw jpFIFM"
+>
+  <div
+    className="sc-htoDjs kIneFD"
+  >
+    Mini-Kanban Board
+  </div>
+  <div
+    className="sc-dnqmqq gBTbCw"
+  >
+    <div
+      className="sc-ifAKCX eYfqbg"
+      width="33.333333333333336%"
+    >
+      <div
+        className="sc-EHOje kYqLhJ"
+      >
+        <div
+          className="sc-htpNat cXCOUR"
+        >
+          To-Do
+        </div>
+        <button
+          className="sc-bwzfXH kODISU"
+          onClick={[Function]}
+        >
+          +
+        </button>
+      </div>
+      <div
+        className="sc-bZQynM lfIEnT"
+      />
+    </div>
+    <div
+      className="sc-ifAKCX eYfqbg"
+      width="33.333333333333336%"
+    >
+      <div
+        className="sc-EHOje kYqLhJ"
+      >
+        <div
+          className="sc-htpNat cXCOUR"
+        >
+          In progress
+        </div>
+        <button
+          className="sc-bwzfXH kODISU"
+          onClick={[Function]}
+        >
+          +
+        </button>
+      </div>
+      <div
+        className="sc-bZQynM lfIEnT"
+      />
+    </div>
+    <div
+      className="sc-ifAKCX eYfqbg"
+      width="33.333333333333336%"
+    >
+      <div
+        className="sc-EHOje kYqLhJ"
+      >
+        <div
+          className="sc-htpNat cXCOUR"
+        >
+          Done
+        </div>
+        <button
+          className="sc-bwzfXH kODISU"
+          onClick={[Function]}
+        >
+          +
+        </button>
+      </div>
+      <div
+        className="sc-bZQynM lfIEnT"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<Board> renders correctly with no columns 1`] = `
 <div
   className="sc-gzVnrw jpFIFM"
 >
@@ -15,22 +100,158 @@ exports[`<Board> renders correctly 1`] = `
 </div>
 `;
 
-exports[`renders correctly 1`] = `
+exports[`<Board> renders correctly with tickets 1`] = `
 <div
-  className="sc-bxivhb gGKUWd"
-  onDoubleClick={[Function]}
-  opacity={1}
+  className="sc-gzVnrw jpFIFM"
 >
   <div
-    className="sc-htpNat cmbrzm"
+    className="sc-htoDjs kIneFD"
   >
-    (no description)
+    Mini-Kanban Board
   </div>
-  <button
-    className="sc-bwzfXH eUNjes"
-    onClick={[Function]}
+  <div
+    className="sc-dnqmqq gBTbCw"
   >
-    -
-  </button>
+    <div
+      className="sc-ifAKCX eYfqbg"
+      width="33.333333333333336%"
+    >
+      <div
+        className="sc-EHOje kYqLhJ"
+      >
+        <div
+          className="sc-htpNat cXCOUR"
+        >
+          To-Do
+        </div>
+        <button
+          className="sc-bwzfXH kODISU"
+          onClick={[Function]}
+        >
+          +
+        </button>
+      </div>
+      <div
+        className="sc-bZQynM lfIEnT"
+      >
+        <div
+          className="sc-bxivhb gGKUWd"
+          onDoubleClick={[Function]}
+          opacity={1}
+        >
+          <div
+            className="sc-htpNat cmbrzm"
+          >
+            Test 1
+          </div>
+          <button
+            className="sc-bwzfXH eUNjes"
+            onClick={[Function]}
+          >
+            -
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="sc-ifAKCX eYfqbg"
+      width="33.333333333333336%"
+    >
+      <div
+        className="sc-EHOje kYqLhJ"
+      >
+        <div
+          className="sc-htpNat cXCOUR"
+        >
+          In progress
+        </div>
+        <button
+          className="sc-bwzfXH kODISU"
+          onClick={[Function]}
+        >
+          +
+        </button>
+      </div>
+      <div
+        className="sc-bZQynM lfIEnT"
+      >
+        <div
+          className="sc-bxivhb gGKUWd"
+          onDoubleClick={[Function]}
+          opacity={1}
+        >
+          <div
+            className="sc-htpNat cmbrzm"
+          >
+            Test 2
+          </div>
+          <button
+            className="sc-bwzfXH eUNjes"
+            onClick={[Function]}
+          >
+            -
+          </button>
+        </div>
+        <div
+          className="sc-bxivhb gGKUWd"
+          onDoubleClick={[Function]}
+          opacity={1}
+        >
+          <div
+            className="sc-htpNat cmbrzm"
+          >
+            Test 4
+          </div>
+          <button
+            className="sc-bwzfXH eUNjes"
+            onClick={[Function]}
+          >
+            -
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="sc-ifAKCX eYfqbg"
+      width="33.333333333333336%"
+    >
+      <div
+        className="sc-EHOje kYqLhJ"
+      >
+        <div
+          className="sc-htpNat cXCOUR"
+        >
+          Done
+        </div>
+        <button
+          className="sc-bwzfXH kODISU"
+          onClick={[Function]}
+        >
+          +
+        </button>
+      </div>
+      <div
+        className="sc-bZQynM lfIEnT"
+      >
+        <div
+          className="sc-bxivhb gGKUWd"
+          onDoubleClick={[Function]}
+          opacity={1}
+        >
+          <div
+            className="sc-htpNat cmbrzm"
+          >
+            Test 3
+          </div>
+          <button
+            className="sc-bwzfXH eUNjes"
+            onClick={[Function]}
+          >
+            -
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 `;
